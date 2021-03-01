@@ -1,5 +1,6 @@
 package kz.edu.astanait.ajp2_final_project.configs;
 
+import kz.edu.astanait.ajp2_final_project.models.User;
 import kz.edu.astanait.ajp2_final_project.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.servlet.http.HttpSession;
 
 @Configuration
 @EnableWebSecurity
@@ -35,7 +40,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
 
-                .antMatchers(HttpMethod.GET, "/api/**").permitAll();
+                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+                .antMatchers("/registration").not().authenticated()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+
+                .and()
+                .formLogin()
+                .loginPage("/login").permitAll()
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .successHandler(authenticationSuccessHandler())
+
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login")
+                .permitAll();
+    }
+
+    private AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return ((request, response, authentication) -> {
+            String username = request.getParameter("username");
+            User user = userRepository.findByUsername(username);
+
+            HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(60 * 60 * 5); //5 hours
+            session.setAttribute("user", user);
+
+            response.sendRedirect("/");
+        });
     }
 
     @Override
@@ -46,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/static/js/**", "/img/**", "/icon/**");
     }
 
     @Bean
