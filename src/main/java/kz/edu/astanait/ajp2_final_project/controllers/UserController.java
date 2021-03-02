@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/users")
 public class UserController {
 
     private UserService userService;
@@ -33,5 +32,4 @@ public class UserController {
         userService.register(userForm);
         return "login";
     }
-
 }
