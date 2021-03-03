@@ -20,6 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         kz.edu.astanait.ajp2_final_project.models.User user = userRepository.findByUsername(username);
+        if (user == null) throw new UsernameNotFoundException("User with username " + username + " not found");
         return getAuthenticatedUser(user);
     }
 
