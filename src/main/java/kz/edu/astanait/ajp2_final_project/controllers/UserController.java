@@ -3,11 +3,10 @@ package kz.edu.astanait.ajp2_final_project.controllers;
 import kz.edu.astanait.ajp2_final_project.models.User;
 import kz.edu.astanait.ajp2_final_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -32,6 +31,40 @@ public class UserController {
     public String registration(@ModelAttribute("userForm") User userForm) {
         userService.register(userForm);
         return "login";
+    }
+
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("userForm") User userForm) {
+        // save user to database
+            userService.register(userForm);
+
+            return "admin";
+    }
+    @GetMapping("/adminprofile")
+    public String viewList(Model model){
+        model.addAttribute("listUsers",userService.getAllUsers());
+        return "admin";
+    }
+    @GetMapping("/profile")
+    public String viewInfo(Model model){
+        model.addAttribute("listUsers",userService.getAllUsers());
+        return "profile";
+    }
+    @GetMapping("/showNewUserForm")
+    public String showNewUserForm(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "new_user";
+    }
+    @GetMapping("/showFormForUpdate/{id}")
+    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
+
+        // get user from the service
+        User user = userService.getUserById(id);
+
+        // set user as a model attribute to pre-populate the form
+        model.addAttribute("user", user);
+        return "update_user";
     }
 
 }
