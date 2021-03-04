@@ -7,33 +7,33 @@
 </head>
 <body class="d-flex justify-content-center bg-light">
 
-<form action="/add/answer" method="post"
+<form action="/answer/add" method="post"
       class="col-md-4 align-self-center position-absolute top-50 translate-middle-y d-flex flex-column"
-      th:object="${addAnswerForm}">
+      >
     <h2 class="d-flex justify-content-center">Add Answers form</h2>
         <div class="mb-3">
             <label for="answerOneInput" class="form-label">Answer One</label>
             <input type="text" class="form-control"
                    id="answerOneInput" aria-describedby="answerOneInputDesc"
-                   name="answerOne" th:field="*{answerOne}">
+                   name="answerOne" th:value="*{addAnswerForm.answerOne}">
             <div id="answerOneError" class="form-text text-danger" hidden></div>
         </div><div class="mb-3">
         <label for="answerTwoInput" class="form-label">Answer Two</label>
         <input type="text" class="form-control"
                id="answerTwoInput" aria-describedby="answerTwoInputDesc"
-               name="answerTwo" th:field="*{answerTwo}">
+               name="answerTwo" th:value="*{addAnswerForm.answerTwo}">
         <div id="answerTwoError" class="form-text text-danger" hidden></div>
     </div><div class="mb-3">
         <label for="answerThreeInput" class="form-label">Answer Three</label>
         <input type="text" class="form-control"
                id="answerThreeInput" aria-describedby="answerThreeInputDesc"
-               name="answerThree" th:field="*{answerThree}">
+               name="answerThree" th:value="*{addAnswerForm.answerThree}">
         <div id="answerThreeError" class="form-text text-danger" hidden></div>
     </div><div class="mb-3">
         <label for="answerFourInput" class="form-label">Answer Four</label>
         <input type="text" class="form-control"
                id="answerFourInput" aria-describedby="answerFourInputDesc"
-               name="answerFour" th:field="*{answerFour}">
+               name="answerFour" th:value="*{addAnswerForm.answerFour}">
         <div id="answerFourError" class="form-text text-danger" hidden></div>
     </div>
     <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>

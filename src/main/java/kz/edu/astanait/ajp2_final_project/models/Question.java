@@ -18,7 +18,7 @@ public class Question {
     @Column(name = "question")
     private String question;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "answer_id", nullable = false, insertable = false, updatable = false)
     private List<Answer> answers;
 
