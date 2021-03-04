@@ -1,26 +1,23 @@
 package kz.edu.astanait.ajp2_final_project.controllers;
 
-import kz.edu.astanait.ajp2_final_project.dto.VoteDto;
 import kz.edu.astanait.ajp2_final_project.models.Answer;
 import kz.edu.astanait.ajp2_final_project.models.Question;
-import kz.edu.astanait.ajp2_final_project.models.User;
 import kz.edu.astanait.ajp2_final_project.services.AnswerService;
 import kz.edu.astanait.ajp2_final_project.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class QuestionController {
+public class VoteController {
     private QuestionService questionService;
     private AnswerService answerService;
     private Question relationId;
     @Autowired
-    public QuestionController(QuestionService questionService, AnswerService answerService){
+    public VoteController(QuestionService questionService, AnswerService answerService){
         this.questionService = questionService;
         this.answerService = answerService;
     }
