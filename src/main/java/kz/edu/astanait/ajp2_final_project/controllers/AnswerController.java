@@ -27,8 +27,8 @@ public class AnswerController {
     }
 
     @PostMapping("/add/answer")
-    public String addAnswer(@ModelAttribute("addAnswer") Answer answerForm) {
-        answerService.addAnswers(answerForm);
+    public String addAnswer(@ModelAttribute("addAnswerForm") Answer answerForm) {
+//        answerService.addAnswers(answerForm);
         return "";
     }
 

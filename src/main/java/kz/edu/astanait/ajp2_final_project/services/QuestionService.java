@@ -21,9 +21,7 @@ public class QuestionService {
         if (questionRepository.existsByQuestion(question.getQuestion())){
             return;
         }
-        question.setQuestion(question.getQuestion());
-        question.setAnswers(question.getAnswers());
-
+        System.out.println(question);
         questionRepository.save(question);
     }
 }
