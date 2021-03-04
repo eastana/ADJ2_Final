@@ -2,13 +2,16 @@ package kz.edu.astanait.ajp2_final_project.controllers;
 
 import kz.edu.astanait.ajp2_final_project.models.User;
 import kz.edu.astanait.ajp2_final_project.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+@Controller
+@RequestMapping("/admin")
 public class AdminController {
+
+    @Autowired
     private UserService userService;
 
     @GetMapping("/deleteUser/{id}")

@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class UserController {
 
@@ -32,9 +34,26 @@ public class UserController {
         return "login";
     }
     @GetMapping("/profile")
-    public String viewProfile(Model model){
-        model.addAttribute("listUsers",userService.getAllUsers());
+    public String viewProfile(HttpServletRequest httpServletRequest, Model model){
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
+        model.addAttribute("userInfo",userService.getUserById(user.getId()));
         return "profile";
+    }
+    @GetMapping("/FormForUpdate/{id}")
+    public String FormForUpdate(@PathVariable(value = "id") long id, Model model) {
+
+        // get user from the service
+        User user = userService.getUserById(id);
+
+        // set user as a model attribute to pre-populate the form
+        model.addAttribute("user", user);
+        return "update_user1";
+    }
+    @PostMapping("/saveChange")
+    public String saveUser(@ModelAttribute("user") User user) {
+        // save user to database
+        userService.register(user);
+        return "redirect:/profile";
     }
 
 }
