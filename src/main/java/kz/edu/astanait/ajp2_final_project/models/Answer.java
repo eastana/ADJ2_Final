@@ -26,7 +26,7 @@ public class Answer {
     @Column
     private String answerFour;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_id")
     private Question question;
 }

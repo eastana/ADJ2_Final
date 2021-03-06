@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin")
@@ -14,7 +15,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @GetMapping(value = {"","/"})
     public String viewList(Model model){
         model.addAttribute("listUsers",userService.getAllUsers());
         return "admin";
