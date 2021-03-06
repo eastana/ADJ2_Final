@@ -10,8 +10,8 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    private long roleId;
 
-    private long role_id;
     @Column(name = "name")
     private String name;
 
@@ -24,11 +24,11 @@ public class Role {
     private Set<Authority> authorities = new HashSet<>();
 
     public long getId() {
-        return this.role_id;
+        return this.roleId;
     }
 
     public void setId(long role_id) {
-        this.role_id = role_id;
+        this.roleId = role_id;
     }
 
     public String getName() {

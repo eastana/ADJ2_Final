@@ -26,6 +26,26 @@
         <input type="password" class="form-control" id="rePasswordInput" name="re-password">
         <div id="rePasswordError" class="form-text text-danger" hidden>Password don't match.</div>
     </div>
+    <div class="mb-3">
+        <label for="fnameInput" class="form-label">First name</label>
+        <input type="text" class="form-control" id="fnameInput" name="fname" th:field="*{firstName}">
+        <div id="fnameError" class="form-text text-danger" hidden>First name is empty.</div>
+    </div>
+    <div class="mb-3">
+        <label for="lnameInput" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="lnameInput" name="lname" th:field="*{lastName}">
+        <div id="lnameError" class="form-text text-danger" hidden>Last name is empty.</div>
+    </div>
+    <div class="mb-3">
+        <label for="ageInput" class="form-label">Age</label>
+        <input type="number" class="form-control" id="ageInput" name="age" min="12" th:field="*{age}">
+        <div id="ageError" class="form-text text-danger" hidden>Age is empty or less than 12.</div>
+    </div>
+    <div class="mb-3">
+        <label for="interestsInput" class="form-label">Your interests</label>
+        <input type="text" class="form-control" id="interestsInput" name="interests" th:field="*{interests}">
+        <div id="interestsError" class="form-text text-danger" hidden>Interests is empty.</div>
+    </div>
     <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Submit</button>
     <a href="/login" class="link-primary">Have an account? Click to login</a>
 </form>

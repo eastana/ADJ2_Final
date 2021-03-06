@@ -33,12 +33,14 @@ public class UserController {
         userService.register(userForm);
         return "login";
     }
+
     @GetMapping("/profile")
     public String viewProfile(HttpServletRequest httpServletRequest, Model model){
         User user = (User) httpServletRequest.getSession().getAttribute("user");
         model.addAttribute("userInfo",userService.getUserById(user.getId()));
         return "profile";
     }
+
     @GetMapping("/FormForUpdate/{id}")
     public String FormForUpdate(@PathVariable(value = "id") long id, Model model) {
 

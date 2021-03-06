@@ -14,6 +14,12 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/")
+    public String viewList(Model model){
+        model.addAttribute("listUsers",userService.getAllUsers());
+        return "admin";
+    }
+
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable(value = "id") long id) {
 
@@ -36,11 +42,6 @@ public class AdminController {
         // set user as a model attribute to pre-populate the form
         model.addAttribute("user", user);
         return "update_user";
-    }
-    @GetMapping("/admin")
-    public String viewList(Model model){
-        model.addAttribute("listUsers",userService.getAllUsers());
-        return "admin";
     }
 
     @GetMapping("/showNewUserForm")

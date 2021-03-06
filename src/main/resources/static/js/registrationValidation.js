@@ -1,10 +1,15 @@
 let isValidUsername = false;
 let isValidPassword = false;
 let isEqualPassword = false;
+let isValidFname = false;
+let isValidLname = false;
+let isValidAge = false;
+let isValidInterests = false;
 
 $(document).ready(function () {
     function enableSubmitBtn() {
-        if (isValidUsername && isValidPassword && isEqualPassword) {
+        if (isValidUsername && isValidPassword && isEqualPassword
+            && isValidFname && isValidLname && isValidAge && isValidInterests) {
             submitBtn.prop('disabled', false);
         } else {
             submitBtn.prop('disabled', true);
@@ -17,11 +22,43 @@ $(document).ready(function () {
     let usernameInput = $('#usernameInput');
     let passwordInput = $('#passwordInput');
     let rePasswordInput = $('#rePasswordInput');
+    let fnameInput = $('#fnameInput');
+    let lnameInput = $('#lnameInput');
+    let ageInput = $('#ageInput');
+    let interestsInput = $('#interestsInput');
 
     //Error texts
     let usernameError = $('#usernameError');
     let passwordError = $('#passwordError');
     let rePasswordError = $('#rePasswordError');
+    let fnameError = $('#fnameError');
+    let lnameError = $('#lnameError');
+    let ageError = $('#ageError');
+    let interestsError = $('#interestsError');
+
+    fnameInput.blur(function () {
+        isValidFname = fnameInput.val().length !== 0;
+        fnameError.prop('hidden',isValidFname);
+        enableSubmitBtn();
+    });
+
+    lnameInput.blur(function () {
+        isValidLname = lnameInput.val().length !== 0;
+        lnameError.prop('hidden',isValidLname);
+        enableSubmitBtn();
+    });
+
+    ageInput.blur(function () {
+        isValidAge = ageInput.val().length!==0 && ageInput.val()>=12;
+        ageError.prop('hidden',isValidAge);
+        enableSubmitBtn();
+    });
+
+    interestsInput.blur(function (){
+        isValidInterests = interestsInput.val().length!==0;
+        interestsError.prop('hidden',isValidInterests);
+        enableSubmitBtn();
+    });
 
     //Start check username
     function activateUsernameError(msg) {
@@ -30,10 +67,12 @@ $(document).ready(function () {
         usernameInput.addClass('is-invalid');
         usernameError.prop('hidden', false);
     }
+
     function deactivateUsernameError() {
         usernameInput.removeClass('is-invalid');
         usernameError.prop('hidden', true);
     }
+
     usernameInput.blur(function () {
         event.preventDefault();
         let username = usernameInput.val();
