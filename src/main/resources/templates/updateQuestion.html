@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/question/update/}" th:object="${questionToEdit}" method="POST">
+
+    <!-- Add hidden form field to handle update -->
+    <input name="questionId" type="hidden"  th:value="*{id}"/>
+
+    <input name="questionName" type="text" th:value="*{question}"  class="form-control mb-4 col-4">
+
+    <input name="answerId" type="hidden"  th:value="*{answer.answerId}"/>
+
+    <input name="answerOne" type="text" th:value="*{answer.answerOne}" class="form-control mb-4 col-4">
+
+    <input name="answerSecond" type="text" th:value="*{answer.answerTwo}"  class="form-control mb-4 col-4">
+
+    <input name="answerThree" type="text" th:value="*{answer.answerThree}"  class="form-control mb-4 col-4">
+
+    <input name="answerFour" type="text" th:value="*{answer.answerFour}"  class="form-control mb-4 col-4">
+
+    <button type="submit" class="btn btn-info col-2"> Update User</button>
+</form>
+
+
+</body>
+</html>

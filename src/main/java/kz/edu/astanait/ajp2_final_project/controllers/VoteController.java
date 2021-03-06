@@ -4,20 +4,22 @@ import kz.edu.astanait.ajp2_final_project.models.Answer;
 import kz.edu.astanait.ajp2_final_project.models.Question;
 import kz.edu.astanait.ajp2_final_project.services.AnswerService;
 import kz.edu.astanait.ajp2_final_project.services.QuestionService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class VoteController {
     private QuestionService questionService;
     private AnswerService answerService;
-    private Question relationId;
+
     @Autowired
-    public VoteController(QuestionService questionService, AnswerService answerService){
+    public VoteController(QuestionService questionService, AnswerService answerService) {
         this.questionService = questionService;
         this.answerService = answerService;
     }
@@ -30,8 +32,7 @@ public class VoteController {
     }
 
     @PostMapping("/question/add")
-    public String addQuestion(@ModelAttribute("addQuestionForm") Question questionForm){
-        relationId = questionForm;
+    public String addQuestion(@ModelAttribute("addQuestionForm") Question questionForm) {
         questionService.addQuestion(questionForm);
         return "redirect:/answer/add";
     }
@@ -44,9 +45,43 @@ public class VoteController {
     }
 
     @PostMapping("/answer/add")
-    public String addAnswer(@ModelAttribute("addAnswerForm") Answer answerForm){
-        answerService.addAnswers(answerForm, relationId);
-        return "";
+    public String addAnswer(@ModelAttribute("addAnswerForm") Answer answerForm) {
+        answerService.addAnswers(answerForm);
+        return "admin";
+    }
+
+    @GetMapping("/question/update/{id}")
+    public String updateQuestion(@PathVariable(value = "id") long id, Model model) {
+        Question question = questionService.getQuestionById(id);
+        model.addAttribute("questionToEdit", question);
+        return "updateQuestion";
+    }
+
+    @PostMapping("/question/update/")
+    public String updateQuestion(HttpServletRequest request) {
+        Question question = new Question();
+        Answer answer = new Answer();
+
+        answer.setAnswerId(Long.valueOf(request.getParameter("answerId")));
+        answer.setAnswerOne(request.getParameter("answerOne"));
+        answer.setAnswerTwo(request.getParameter("answerSecond"));
+        answer.setAnswerThree(request.getParameter("answerThree"));
+        answer.setAnswerFour(request.getParameter("answerFour"));
+
+        question.setId(Long.valueOf(request.getParameter("questionId")));
+        question.setQuestion(request.getParameter("questionName"));
+        question.setAnswer(answer);
+
+        questionService.updateQuestion(question);
+
+        return "admin";
+    }
+
+    @GetMapping("/question/delete/{id}")
+    public String deleteQuestion(@PathVariable(value = "id") long id) {
+        questionService.deleteQuestion(id);
+
+        return "admin";
     }
 
 }

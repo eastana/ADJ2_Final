@@ -1,7 +1,6 @@
 package kz.edu.astanait.ajp2_final_project.services;
 
 import kz.edu.astanait.ajp2_final_project.models.Answer;
-import kz.edu.astanait.ajp2_final_project.models.Question;
 import kz.edu.astanait.ajp2_final_project.repositories.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,7 @@ public class AnswerService {
         this.answerRepository = answerRepository;
     }
 
-    public void addAnswers(Answer answer, Question relationId){
-        answer.setQuestion(relationId);
+    public void addAnswers(Answer answer){
         answerRepository.save(answer);
     }
 }

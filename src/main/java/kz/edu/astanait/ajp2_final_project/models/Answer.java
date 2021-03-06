@@ -25,8 +25,4 @@ public class Answer {
 
     @Column
     private String answerFour;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "question_id")
-    private Question question;
 }

@@ -1,6 +1,7 @@
 package kz.edu.astanait.ajp2_final_project.controllers;
 
 import kz.edu.astanait.ajp2_final_project.models.User;
+import kz.edu.astanait.ajp2_final_project.services.QuestionService;
 import kz.edu.astanait.ajp2_final_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,13 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private QuestionService questionService;
 
     @GetMapping(value = {"","/"})
     public String viewList(Model model){
         model.addAttribute("listUsers",userService.getAllUsers());
+        model.addAttribute("listQuestions",questionService.getAll());
         return "admin";
     }
 

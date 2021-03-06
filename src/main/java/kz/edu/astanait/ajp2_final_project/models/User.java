@@ -38,6 +38,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "gender")
+    private String gender;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id")
     private Role role;
