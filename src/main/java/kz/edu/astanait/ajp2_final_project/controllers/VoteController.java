@@ -1,9 +1,10 @@
 package kz.edu.astanait.ajp2_final_project.controllers;
 
-import kz.edu.astanait.ajp2_final_project.models.Answer;
-import kz.edu.astanait.ajp2_final_project.models.Question;
+import kz.edu.astanait.ajp2_final_project.models.*;
 import kz.edu.astanait.ajp2_final_project.services.AnswerService;
 import kz.edu.astanait.ajp2_final_project.services.QuestionService;
+import kz.edu.astanait.ajp2_final_project.services.UserService;
+import kz.edu.astanait.ajp2_final_project.services.VoteService;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,13 @@ import java.util.List;
 public class VoteController {
     private QuestionService questionService;
     private AnswerService answerService;
-    private long relationId;
+    private VoteService voteService;
 
     @Autowired
-    public VoteController(QuestionService questionService, AnswerService answerService) {
+    public VoteController(QuestionService questionService, AnswerService answerService, VoteService voteService) {
         this.questionService = questionService;
         this.answerService = answerService;
+        this.voteService = voteService;
     }
 
     @GetMapping("/vote")
@@ -32,6 +34,22 @@ public class VoteController {
         List<Question> questions = questionService.getAll();
         mav.addObject("votesList", questions);
         return mav;
+    }
+
+    @PostMapping("/vote")
+    public String addVote(HttpServletRequest request, HttpServletRequest httpServletRequest){
+        List<Question> questions = questionService.getAll();
+        Question question;
+        User user = (User) httpServletRequest.getSession().getAttribute("user");
+        for (int i = 0; i < questions.size(); i++) {
+            Vote vote = new Vote();
+            question = questionService.getQuestionByName(questions.get(i).getQuestion());
+            vote.setQuestion(question);
+            vote.setAnswer(request.getParameter(questions.get(i).getQuestion()));
+            vote.setUser(user);
+            voteService.saveVote(vote);
+        }
+        return "redirect:/admin";
     }
 
     @GetMapping("/question/add")

@@ -17,7 +17,7 @@ public class Question {
     @Column(name = "question")
     private String question;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "answer_id")
     private Answer answer;
 }
