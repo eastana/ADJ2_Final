@@ -22,4 +22,9 @@ public class UserAPI {
         return userService.findByUsername(username);
     }
 
+    @GetMapping("/checkExistence/{username}/{password}")
+    public @ResponseBody boolean existsByUsernameAndPassword(@PathVariable String username,
+                                                             @PathVariable String password){
+        return userService.existsForUserAPI(username, password);
+    }
 }

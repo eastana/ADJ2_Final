@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public void register(User user) {
-        if(userRepository.existsByUsername(user.getUsername())){
+        if (userRepository.existsByUsername(user.getUsername())) {
             return;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -39,13 +39,14 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public User getUserById(long id){
-        Optional< User > optional = userRepository.findById(id);
-        User user = null;
+
+    public User getUserById(long id) {
+        Optional<User> optional = userRepository.findById(id);
+        User user;
+
         if (optional.isPresent()) {
             user = optional.get();
         } else {
@@ -53,7 +54,13 @@ public class UserService {
         }
         return user;
     }
+
     public void deleteUserById(long id) {
         this.userRepository.deleteById(id);
+    }
+
+    public boolean existsForUserAPI(String username, String password) {
+        User user = findByUsername(username);
+        return user!=null && passwordEncoder.matches(password, user.getPassword());
     }
 }
