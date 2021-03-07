@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             session.setMaxInactiveInterval(60 * 60 * 5); //5 hours
             session.setAttribute("user", user);
 
-            response.sendRedirect("/");
+            response.sendRedirect("/index");
         });
     }
 

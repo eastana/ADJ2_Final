@@ -12,16 +12,26 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class VoteController {
     private QuestionService questionService;
     private AnswerService answerService;
+    private long relationId;
 
     @Autowired
     public VoteController(QuestionService questionService, AnswerService answerService) {
         this.questionService = questionService;
         this.answerService = answerService;
+    }
+
+    @GetMapping("/vote")
+    public ModelAndView showVote(){
+        ModelAndView mav = new ModelAndView("vote");
+        List<Question> questions = questionService.getAll();
+        mav.addObject("votesList", questions);
+        return mav;
     }
 
     @GetMapping("/question/add")
@@ -47,7 +57,7 @@ public class VoteController {
     @PostMapping("/answer/add")
     public String addAnswer(@ModelAttribute("addAnswerForm") Answer answerForm) {
         answerService.addAnswers(answerForm);
-        return "admin";
+        return "redirect:/admin";
     }
 
     @GetMapping("/question/update/{id}")
@@ -74,14 +84,14 @@ public class VoteController {
 
         questionService.updateQuestion(question);
 
-        return "admin";
+        return "redirect:/admin";
     }
 
     @GetMapping("/question/delete/{id}")
     public String deleteQuestion(@PathVariable(value = "id") long id) {
         questionService.deleteQuestion(id);
 
-        return "admin";
+        return "redirect:/admin";
     }
 
 }

@@ -9,10 +9,13 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="/index">Home page</a>
                     </li>
                     <li th:if="${session.user.role.name=='ADMIN'}" class="nav-item">
                         <a class="nav-link" href="/admin" tabindex="-1">Admin page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vote">Vote</a>
                     </li>
                 </ul>
                 <form action="/logout" method="post">
