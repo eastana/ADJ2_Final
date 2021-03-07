@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -29,7 +31,13 @@ public class UserController {
     @GetMapping("/registration")
     public ModelAndView showRegistrationPage() {
         ModelAndView mav = new ModelAndView("registration");
+        List<String> groups = new LinkedList<>();
+        for (int i = 1; i < 10; i++) {
+            String digit = String.valueOf(i);
+            groups.add("SE-190" + digit);
+        }
         mav.addObject("userForm", new User());
+        mav.addObject("groupList", groups);
         return mav;
     }
 

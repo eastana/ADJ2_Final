@@ -49,7 +49,7 @@ public class VoteController {
             vote.setUser(user);
             voteService.saveVote(vote);
         }
-        return "redirect:/admin";
+        return "redirect:/index";
     }
 
     @GetMapping("/question/add")

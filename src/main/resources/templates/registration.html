@@ -4,10 +4,15 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
     <link th:replace="includes/bootstrapCSS">
+    <style>
+        form{
+            margin-top: 30rem;
+        }
+    </style>
 </head>
 <body class="d-flex justify-content-center bg-light">
 
-<form action="/registration" method="post" class="col-md-4 align-self-center position-absolute top-50 translate-middle-y d-flex flex-column" th:object="${userForm}">
+<form action="/registration" method="post" class="col-md-4 align-self-center translate-middle-y d-flex flex-column" th:object="${userForm}">
     <h2 class="d-flex justify-content-center">Registration form</h2>
 
     <div class="mb-3">
@@ -37,9 +42,24 @@
         <div id="lnameError" class="form-text text-danger" hidden>Last name is empty.</div>
     </div>
     <div class="mb-3">
+        <label for="groupInput" class="form-label" >Group</label><br>
+        <select name="group" class="form-control" id="groupInput" th:field="*{groupName}" required>
+            <option value="Choose group" selected disabled>Choose group</option>
+            <option th:each="group : ${groupList}"  th:value="${group}" name="group" ><span th:text="${group}"></span></option>
+        </select>
+        <div id="groupError" class="form-text text-danger" hidden>Select group</div>
+    </div>
+    <div class="mb-3">
         <label for="ageInput" class="form-label">Age</label>
         <input type="number" class="form-control" id="ageInput" name="age" min="12" th:field="*{age}">
         <div id="ageError" class="form-text text-danger" hidden>Age is empty or less than 12.</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Gender</label>
+        <br>
+        <input type="radio" value="Male" name="gender" th:field="*{gender}" required> Male <br>
+        <input type="radio" value="Female" name="gender" th:field="*{gender}" required> Female <br>
+        <input type="radio" value="I prefer not to say" name="gender" th:field="*{gender}" required> I prefer not to say <br>
     </div>
     <div class="mb-3">
         <label for="interestsInput" class="form-label">Your interests</label>
