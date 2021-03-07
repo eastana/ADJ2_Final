@@ -35,6 +35,10 @@ public class QuestionService {
         return questionRepository.getOne(id);
     }
 
+    public Question getQuestionByName(String question){
+        return questionRepository.findByQuestion(question);
+    }
+
     public void updateQuestion(Question question){
         questionRepository.save(question);
         answerRepository.save(question.getAnswer());
