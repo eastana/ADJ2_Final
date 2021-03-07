@@ -1,8 +1,10 @@
 package kz.edu.astanait.ajp2_final_project.rest;
 
+import kz.edu.astanait.ajp2_final_project.models.Vote;
 import kz.edu.astanait.ajp2_final_project.services.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +17,9 @@ public class VoteAPI {
     public VoteAPI(VoteService voteService) {
         this.voteService = voteService;
     }
-//
-//    @PostMapping("/addVote")
-//    public void addVote()
+
+    @PostMapping("/addVote")
+    public void addVote(@RequestBody Vote vote){
+        voteService.saveVote(vote);
+    }
 }
