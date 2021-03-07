@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -13,11 +14,15 @@ public class VoteService {
     private final VoteRepository voteRepository;
 
     @Autowired
-    public VoteService(VoteRepository voteRepository){
+    public VoteService(VoteRepository voteRepository) {
         this.voteRepository = voteRepository;
     }
 
-    public void saveVote(Vote vote){
+    public void saveVote(Vote vote) {
         voteRepository.save(vote);
+    }
+
+    public List<Vote> getAll() {
+        return voteRepository.findAll();
     }
 }
