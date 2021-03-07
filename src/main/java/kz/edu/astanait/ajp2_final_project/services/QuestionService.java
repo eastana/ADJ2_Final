@@ -14,6 +14,7 @@ import java.util.List;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+
     @Autowired
     public QuestionService(QuestionRepository questionRepository, AnswerRepository answerRepository){
         this.questionRepository = questionRepository;
@@ -25,6 +26,7 @@ public class QuestionService {
             return;
         }
         questionRepository.save(question);
+        answerRepository.save(question.getAnswer());
     }
 
     public List<Question> getAll(){

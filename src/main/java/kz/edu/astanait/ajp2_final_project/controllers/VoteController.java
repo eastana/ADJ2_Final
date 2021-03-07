@@ -55,26 +55,15 @@ public class VoteController {
     @GetMapping("/question/add")
     public ModelAndView showQuestionAddPage() {
         ModelAndView mav = new ModelAndView("addQuestion");
-        mav.addObject("addQuestionForm", new Question());
+        Question question = new Question();
+        question.setAnswer(new Answer());
+        mav.addObject("addQuestionForm", question);
         return mav;
     }
 
     @PostMapping("/question/add")
     public String addQuestion(@ModelAttribute("addQuestionForm") Question questionForm) {
         questionService.addQuestion(questionForm);
-        return "redirect:/answer/add";
-    }
-
-    @GetMapping("/answer/add")
-    public ModelAndView showAnswerAddPage() {
-        ModelAndView mav = new ModelAndView("addAnswer");
-        mav.addObject("addAnswerForm", new Answer());
-        return mav;
-    }
-
-    @PostMapping("/answer/add")
-    public String addAnswer(@ModelAttribute("addAnswerForm") Answer answerForm) {
-        answerService.addAnswers(answerForm);
         return "redirect:/admin";
     }
 
