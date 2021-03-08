@@ -1,5 +1,6 @@
 package kz.edu.astanait.ajp2_final_project.services;
 
+import kz.edu.astanait.ajp2_final_project.models.Role;
 import kz.edu.astanait.ajp2_final_project.models.User;
 import kz.edu.astanait.ajp2_final_project.repositories.RoleRepository;
 import kz.edu.astanait.ajp2_final_project.repositories.UserRepository;
@@ -36,6 +37,7 @@ public class UserService {
     }
 
     public void update(User user){
+
         userRepository.save(user);
     }
 

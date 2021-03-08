@@ -1,6 +1,5 @@
 package kz.edu.astanait.ajp2_final_project.controllers;
 
-import kz.edu.astanait.ajp2_final_project.models.Answer;
 import kz.edu.astanait.ajp2_final_project.models.Question;
 import kz.edu.astanait.ajp2_final_project.models.User;
 import kz.edu.astanait.ajp2_final_project.models.Vote;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,16 +55,76 @@ public class AdminController {
         return "update_user";
     }
 
-    @GetMapping("/showNewUserForm")
-    public String showNewUserForm(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        return "new_user";
+    @GetMapping("/showQuestions")
+    public String showQuestions(Model model) {
+        List<Question> questions = questionService.getAll();
+        model.addAttribute("questionList",questions);
+        return "questionList";
     }
 
-    @GetMapping("/showStatistics")
-    public String showStatistics(Model model) {
+    @GetMapping("/showStats")
+    public String showStats(Model model){
+        Integer sum=0,a=0,b=0,aPercentage=0,bPercentage=0;
+        List<User> users = userService.getAllUsers();
+        Map<String,Integer> genderMapping = new HashMap<>();
+
+        for (User u:users) {
+            if(u.getGender().equalsIgnoreCase("male")){
+                a++;
+            }else{
+                b++;
+            }
+        }
+
+        sum = a + b;
+        aPercentage = (a * 100)/sum;
+        bPercentage = (b * 100)/sum;
+
+        genderMapping.put("Male",aPercentage);
+        genderMapping.put("Female",bPercentage);
+
+        model.addAttribute("genders",genderMapping);
+        model.addAttribute("users",users);
 
         return "statistics";
+    }
+
+    @GetMapping("/statistics/{id}")
+    public String showStats(@PathVariable Long id,Model model){
+        Map<String,Integer> answerMapping = new HashMap<>();
+        Question question = questionService.getQuestionById(id);
+        List<Vote> votes = voteService.getByQuestion(question);
+        Integer a=0,b=0,c=0,d=0,sum=0,aPercentage=0,bPercentage=0,cPercentage=0,dPercentage=0;
+
+        for (int i = 0; i < votes.size(); i++) {
+            if(votes.get(i).getAnswer().equals(question.getAnswer().getAnswerOne())){
+                a++;
+            }
+            if(votes.get(i).getAnswer().equals(question.getAnswer().getAnswerTwo())){
+                b++;
+            }
+            if(votes.get(i).getAnswer().equals(question.getAnswer().getAnswerThree())){
+                c++;
+            }
+            if(votes.get(i).getAnswer().equals(question.getAnswer().getAnswerFour())){
+                d++;
+            }
+        }
+        sum = a + b + c + d;
+
+        aPercentage = (a * 100)/sum;
+        bPercentage = (b * 100)/sum;
+        cPercentage = (c * 100)/sum;
+        dPercentage = (d * 100)/sum;
+
+        answerMapping.put(question.getAnswer().getAnswerOne(),aPercentage);
+        answerMapping.put(question.getAnswer().getAnswerTwo(),bPercentage);
+        answerMapping.put(question.getAnswer().getAnswerThree(),cPercentage);
+        answerMapping.put(question.getAnswer().getAnswerFour(),dPercentage);
+
+        model.addAttribute("question",question);
+        model.addAttribute("answerMapping",answerMapping);
+
+        return "questionStats";
     }
 }

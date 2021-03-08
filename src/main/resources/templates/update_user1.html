@@ -29,7 +29,12 @@
 
         <input type="text" th:field="*{username}"  class="form-control mb-4 col-4">
 
-        <input type="text" th:field="*{password}"  class="form-control mb-4 col-4">
+        <input disabled type="text" th:field="*{role}"  class="form-control mb-4 col-4">
+
+        <input type="radio" value="Male" name="gender" th:field="*{gender}" required> Male <br>
+        <input type="radio" value="Female" name="gender" th:field="*{gender}" required> Female <br>
+
+        <input type="hidden" th:field="*{password}" class="form-control mb-4 col-4">
 
         <button type="submit" class="btn btn-info col-2"> Update User</button>
     </form>
@@ -40,4 +45,4 @@
 </div>
 </body>
 
-</html>>
+</html>

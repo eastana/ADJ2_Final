@@ -23,6 +23,14 @@ public class Role {
     )
     private Set<Authority> authorities = new HashSet<>();
 
+    public Role(){
+
+    }
+
+    public Role(int i) {
+        this.roleId = i;
+    }
+
     public long getId() {
         return this.roleId;
     }

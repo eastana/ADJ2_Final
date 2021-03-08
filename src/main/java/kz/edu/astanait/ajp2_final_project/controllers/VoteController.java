@@ -45,7 +45,12 @@ public class VoteController {
             vote.setQuestion(question);
             vote.setAnswer(request.getParameter(questions.get(i).getQuestion()));
             vote.setUser(user);
-            voteService.saveVote(vote);
+
+            if(voteService.existsByQuestionAndUser(question,user)){
+                voteService.updateVote(vote.getAnswer(),vote.getQuestion().getId(),vote.getUser().getId());
+            }else{
+                voteService.saveVote(vote);
+            }
         }
         return "redirect:/index";
     }
