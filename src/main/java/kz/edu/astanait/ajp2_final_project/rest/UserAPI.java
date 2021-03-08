@@ -19,7 +19,13 @@ public class UserAPI {
 
     @GetMapping("/getByUsername/{username}")
     public @ResponseBody
-    UserApiDTO getUserByUsername(@PathVariable String username) {
+    User getUserByUsername(@PathVariable String username) {
+        return userService.findByUsername(username);
+    }
+
+    @GetMapping("/getByUsernameForAndroid/{username}")
+    public @ResponseBody
+    UserApiDTO getByUsernameForAndroid(@PathVariable String username) {
         User user = userService.findByUsername(username);
         return new UserApiDTO(user.getId(), username, user.getPassword());
     }
