@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,5 +20,9 @@ public class AnswerService {
 
     public void addAnswers(Answer answer){
         answerRepository.save(answer);
+    }
+
+    public List<Answer> getAll(){
+        return answerRepository.findAll();
     }
 }
