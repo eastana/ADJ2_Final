@@ -13,7 +13,7 @@
     <hr>
     <h2>Update user</h2>
 
-    <form action="#" th:action="@{/saveUser}" th:object="${user}" method="POST">
+    <form action="#" th:action="@{/saveChange}" th:object="${user}" method="POST">
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />

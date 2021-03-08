@@ -3,7 +3,6 @@ package kz.edu.astanait.ajp2_final_project.controllers;
 import kz.edu.astanait.ajp2_final_project.models.User;
 import kz.edu.astanait.ajp2_final_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,11 +63,12 @@ public class UserController {
         model.addAttribute("user", user);
         return "update_user1";
     }
+
     @PostMapping("/saveChange")
     public String saveUser(@ModelAttribute("user") User user) {
         // save user to database
-        userService.register(user);
-        return "redirect:/profile";
+        userService.update(user);
+        return "redirect:/index";
     }
 
 }
