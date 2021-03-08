@@ -18,8 +18,9 @@ public class VoteAPI {
         this.voteService = voteService;
     }
 
-    @PostMapping("/addVote")
-    public void addVote(@RequestBody Vote vote){
+    @PostMapping(path = "/addVote", consumes = "application/json")
+    public void addVote(@RequestBody Vote vote) {
+        System.out.println(vote);
         voteService.saveVote(vote);
     }
 }
